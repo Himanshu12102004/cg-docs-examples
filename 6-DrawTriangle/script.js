@@ -8,8 +8,9 @@ gl.viewport(0, 0, canvas.width, canvas.height);
 //Step 2: Write the shaders
 // vertex shader
 const vertexShaderSource = `#version 300 es
+in vec2 a_position;
 void main(){
-  gl_Position = vec4(0,0,0,1);
+  gl_Position = vec4(a_position,0,1);
   gl_PointSize = 30.0;
 }`;
 
@@ -51,15 +52,36 @@ gl.attachShader(program, fragmentShader);
 
 // Step 6: Link the program
 gl.linkProgram(program);
-if (gl.getProgramParameter(program, gl.LINK_STATUS)) {
+if (!gl.getProgramParameter(program, gl.LINK_STATUS)) {
   console.log(
     "error while linking the program:",
     gl.getProgramInfoLog(program)
   );
 }
 
+const pointsCoordinates = [
+  0,
+  0.5, // First point
+  -0.5,
+  -0.5, // Second point
+  0.5,
+  -0.5, // Third point
+];
+
+const a_position_location = gl.getAttribLocation(program, "a_position");
+// Create Buffer
+const pointsBuffer = gl.createBuffer();
+gl.bindBuffer(gl.ARRAY_BUFFER, pointsBuffer);
+gl.bufferData(
+  gl.ARRAY_BUFFER,
+  new Float32Array(pointsCoordinates),
+  gl.STATIC_DRAW
+);
+gl.vertexAttribPointer(a_position_location, 2, gl.FLOAT, false, 0, 0);
+
+gl.enableVertexAttribArray(a_position_location);
 // Step 7: Use the WebGL program
 gl.useProgram(program);
 
 // Step 8: Issue the draw call
-gl.drawArrays(gl.POINTS, 0, 1);
+gl.drawArrays(gl.TRIANGLES, 0, 3);
