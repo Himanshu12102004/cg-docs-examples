@@ -1,6 +1,7 @@
 //Step 1: Set the viewport
 const canvas = document.querySelector("canvas");
 const gl = canvas.getContext("webgl2");
+
 canvas.height = window.innerHeight; // For making the canvas full screen
 canvas.width = window.innerWidth; // For making the canvas full screen
 gl.viewport(0, 0, canvas.width, canvas.height);
