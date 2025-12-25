@@ -27,10 +27,9 @@ function utilCreateProgram(gl, vertexShader, fragmentShader) {
   return program;
 }
 
-function utilCreateBuffer(gl, attribLocation, data) {
+function utilCreateBuffer(gl, data) {
   const buffer = gl.createBuffer();
   gl.bindBuffer(gl.ARRAY_BUFFER, buffer);
   gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(data), gl.STATIC_DRAW);
-  gl.enableVertexAttribArray(attribLocation);
   return buffer;
 }

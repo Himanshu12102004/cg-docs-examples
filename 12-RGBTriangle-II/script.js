@@ -4,8 +4,8 @@ const gl = canvas.getContext("webgl2");
 canvas.height = window.innerHeight; // For making the canvas full screen
 canvas.width = window.innerWidth; // For making the canvas full screen
 gl.viewport(0, 0, canvas.width, canvas.height);
-gl.clearColor(0,0,0,1);
-gl.clear(gl.COLOR_BUFFER_BIT)
+gl.clearColor(0, 0, 0, 1);
+gl.clear(gl.COLOR_BUFFER_BIT);
 //Step 2: Write the shaders
 // vertex shader
 const vertexShaderSource = `#version 300 es
@@ -39,30 +39,21 @@ const fragmentShader = utilCreateShader(
 // Step 4: Create a WebGL program
 const program = utilCreateProgram(gl, vertexShader, fragmentShader);
 
-const vertexCoordinates = [
-  0, 0.5, // First vertex
-  -0.5, -0.5, // Second vertex
-  0.5, -0.5, // Third vertex
+const vertexCoordinatesAndColors = [
+  0.0,  0.5,  1.0, 0.0, 0.0,  // Vertex 1 → (x, y) + (r, g, b)
+ -0.5, -0.5,  0.0, 1.0, 0.0,  // Vertex 2 → (x, y) + (r, g, b)
+  0.5, -0.5,  0.0, 0.0, 1.0,  // Vertex 3 → (x, y) + (r, g, b)
 ];
-
-const vertexColor = [
-  1, 0, 0, // first vertex color
-  0, 1, 0, // second vertex color
-  0, 0, 1 // third vertex color
-]
 
 const a_position_location = gl.getAttribLocation(program, "a_position");
 const a_color_location = gl.getAttribLocation(program, "a_color");
 
 // Step 7: Use the WebGL program
 gl.useProgram(program);
-
-const pointsBuffer = utilCreateBuffer(gl, vertexCoordinates);
-gl.vertexAttribPointer(a_position_location, 2, gl.FLOAT, false, 0, 0);
+const pointsBuffer = utilCreateBuffer(gl, vertexCoordinatesAndColors);
+gl.vertexAttribPointer(a_position_location, 2, gl.FLOAT, false, 5*4 , 0);
 gl.enableVertexAttribArray(a_position_location);
-
-const colorBuffer = utilCreateBuffer(gl, vertexColor);
-gl.vertexAttribPointer(a_color_location, 3, gl.FLOAT, false, 0, 0);
+gl.vertexAttribPointer(a_color_location, 3, gl.FLOAT, false, 5 * 4, 2 * 4);
 gl.enableVertexAttribArray(a_color_location);
 
 // Step 8: Issue the draw call

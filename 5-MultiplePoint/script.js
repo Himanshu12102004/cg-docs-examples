@@ -15,7 +15,7 @@ void main(){
 }`;
 
 // fragment shader
-const fragmentShaderSource = `# version 300 es
+const fragmentShaderSource = `#version 300 es
 precision mediump float;
 out vec4 color;
 void main(){
@@ -74,11 +74,12 @@ gl.bufferData(
   new Float32Array(pointsCoordinates),
   gl.STATIC_DRAW
 );
+gl.useProgram(program); //Use the program before making vertexAttribPointer call I will explain this later in Webgl: State Machine chapter
+
 gl.vertexAttribPointer(a_position_location, 2, gl.FLOAT, false, 0, 0);
 
 gl.enableVertexAttribArray(a_position_location);
 // Step 7: Use the WebGL program
-gl.useProgram(program);
 
 // Step 8: Issue the draw call
 gl.drawArrays(gl.POINTS, 0, 3);

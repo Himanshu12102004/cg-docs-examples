@@ -60,13 +60,10 @@ if (!gl.getProgramParameter(program, gl.LINK_STATUS)) {
   );
 }
 
-const pointsCoordinates = [
-  0,
-  0.5, // First point
-  -0.5,
-  -0.5, // Second point
-  0.5,
-  -0.5, // Third point
+const vertexCoordinates = [
+  0, 0.5, // First vertex
+  -0.5, -0.5, // Second vertex
+  0.5, -0.5, // Third vertex
 ];
 
 const a_position_location = gl.getAttribLocation(program, "a_position");
@@ -75,7 +72,7 @@ const pointsBuffer = gl.createBuffer();
 gl.bindBuffer(gl.ARRAY_BUFFER, pointsBuffer);
 gl.bufferData(
   gl.ARRAY_BUFFER,
-  new Float32Array(pointsCoordinates),
+  new Float32Array(vertexCoordinates),
   gl.STATIC_DRAW
 );
 gl.vertexAttribPointer(a_position_location, 2, gl.FLOAT, false, 0, 0);
