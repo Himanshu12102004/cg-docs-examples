@@ -15,7 +15,7 @@ in vec3 a_color;
 uniform float u_aspectRatio;
 out vec3 frag_color;
 void main() {
-    gl_Position = vec4(a_position.x, a_position.y*u_aspectRatio, 0, 1);
+    gl_Position = vec4(a_position.x/u_aspectRatio, a_position.y, 0, 1);
     frag_color = a_color;
 }`;
 
@@ -40,27 +40,10 @@ const program = utilCreateProgram(gl, vertexShader, fragmentShader);
 
 // Step 5: Define square vertices and colors using TRIANGLE_STRIP
 const vertexCoordinatesAndColors = [
-  // x, y, r, g, b
-  -0.5,
-  0.5,
-  1.0,
-  0.0,
-  0.0, // Top-left → Red
-  -0.5,
-  -0.5,
-  0.0,
-  1.0,
-  0.0, // Bottom-left → Green
-  0.5,
-  0.5,
-  0.0,
-  0.0,
-  1.0, // Top-right → Blue
-  0.5,
-  -0.5,
-  1.0,
-  1.0,
-  0.0, // Bottom-right → Yellow
+  -0.5,  0.5, 1.0, 0.0, 0.0, // Top-left → Red
+  -0.5, -0.5, 0.0, 1.0, 0.0, // Bottom-left → Green
+   0.5,  0.5, 0.0, 0.0, 1.0, // Top-right → Blue
+   0.5, -0.5, 1.0, 1.0, 0.0, // Bottom-right → Yellow
 ];
 
 // Step 6: Get attribute locations
